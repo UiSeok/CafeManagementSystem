@@ -1,0 +1,42 @@
+{
+	"orderData":
+	{
+		"orderId":123,
+		"orderTime":20161019183330,
+		"beverages":
+		[
+			{
+				"bevId":100,
+				"count":2
+			},
+			{
+				"bevId":101,
+				"count":1
+			},
+			{
+				"bevId":102,
+				"count":11
+			},
+			{
+				"bevId":103,
+				"count":4
+			}
+			{
+				"bevId":100,
+				"count":1
+			},
+			{
+				"bevId":101,
+				"count":2
+			}
+			{
+				"bevId":102,
+				"count":3
+			},
+			{
+				"bevId":103,
+				"count":4
+			}
+		]
+}
+}

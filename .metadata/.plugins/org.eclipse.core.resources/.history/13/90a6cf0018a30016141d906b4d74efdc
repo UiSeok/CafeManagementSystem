@@ -1,0 +1,15 @@
+orderData:
+{
+	orderId:"123",
+	orderTime:"20161019183330",
+	beverages:[
+		{
+			bevId:"1",
+			count:"2"
+		}
+		{
+			bevId:"2",
+			count:"1"
+		}
+	]
+}

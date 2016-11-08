@@ -1,0 +1,14 @@
+package tmon.data;
+
+import java.io.Serializable;
+
+import com.google.gson.annotations.SerializedName;
+
+public class OrderDataResult implements Serializable{
+
+	private static final long serialVersionUID = 6197660840009954310L;
+	
+	@SerializedName("orderData")
+	public OrderData orderData;
+
+}

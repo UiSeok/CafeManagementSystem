@@ -1,0 +1,26 @@
+package tmon.data;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import tmon.manager.BaristaManager;
+import tmon.manager.DBManager;
+
+public class Menu {
+	List<Beverage> bev_list;
+	
+	private static Menu instance;
+	
+	public static Menu getInstnace() {
+		if (instance == null) {
+			instance = new Menu();
+		}
+		return instance;
+	}
+	
+	private Menu() {
+		bev_list = new ArrayList<Menu>();
+		bev_list.addAll(DBManager.getInstnace().getMenu());
+	}
+	
+}

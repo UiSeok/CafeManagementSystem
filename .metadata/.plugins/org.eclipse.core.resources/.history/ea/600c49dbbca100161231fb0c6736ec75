@@ -1,0 +1,28 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Date;
+import java.util.List;
+import java.util.Scanner;
+
+import tmon.data.BaristaData;
+import tmon.data.Beverage;
+import tmon.data.Common;
+import tmon.data.Menu;
+import tmon.data.OrderData;
+import tmon.data.constant.BeverageConstant;
+import tmon.manager.CafeManager;
+import tmon.manager.DBManager;
+
+public class Main {
+	public static void main(String[] args) {
+
+		CafeManager.getInstnace().openCafe();
+		
+
+	}
+
+}

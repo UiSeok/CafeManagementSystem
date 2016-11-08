@@ -1,0 +1,9 @@
+package tmon.data;
+
+import java.util.Scanner;
+
+public class Common {
+	public static final Scanner scanner = new Scanner(System.in);
+	
+	
+}

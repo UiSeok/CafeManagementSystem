@@ -1,0 +1,61 @@
+import java.util.ArrayList;
+
+import tmon.data.Beverage;
+import tmon.data.OrderData;
+
+import com.google.gson.Gson;
+
+public class Main {
+	public static void main(String[] args) {
+
+//		Gson gson = new Gson();
+//		OrderData data = new OrderData();
+//		data.orderId = 123456;
+//		data.orderTime = 1611051439;
+//		data.beverages = new ArrayList<Beverage>();
+//		data.beverages.add(new Beverage(100, "Espresso", 0));
+//		data.beverages.add(new Beverage(101, "Americano", 0));
+//		
+//		
+//		String jsonString = gson.toJson(data, OrderData.class);
+//		System.out.println(jsonString);
+		
+		
+		if(CafeManager.getInstnace().openCafe() == 1){
+			// Manager open Cafe
+			int input = 0;
+			do{
+				input = CafeManager.getInstnace().getMenu();
+				switch (input) {
+				case 1:
+					// Show Menu
+					CafeManager.getInstnace().showMenu();
+					break;
+				case 2:
+					// Manage Barista
+					
+					break;
+				case 3:
+					// Manage LoadBalancing
+					
+					break;
+				case 4:
+					// Manage Menu
+					break;
+				case 5:
+					CafeManager.getInstnace().order(null);
+					break;
+				case 6:
+					// Close Cafe
+					CafeManager.getInstnace().closeCafe();
+					
+					break;
+				}
+			}
+			while( input != 5);
+		}
+		
+
+	}
+
+}

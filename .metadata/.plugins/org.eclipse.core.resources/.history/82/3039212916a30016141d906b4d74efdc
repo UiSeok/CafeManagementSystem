@@ -1,0 +1,15 @@
+package tmon.data;
+
+import java.io.Serializable;
+
+import com.google.gson.annotations.SerializedName;
+
+public class Beverages implements Serializable{
+	
+	@SerializedName("bevId")
+	public int bevId;
+	
+	@SerializedName("count")
+	public int count;
+	
+}

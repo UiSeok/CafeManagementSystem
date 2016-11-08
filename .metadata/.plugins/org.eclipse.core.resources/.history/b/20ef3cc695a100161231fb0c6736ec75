@@ -1,0 +1,48 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Date;
+import java.util.List;
+import java.util.Scanner;
+
+import tmon.data.BaristaData;
+import tmon.data.Beverage;
+import tmon.data.Common;
+import tmon.data.Menu;
+import tmon.data.OrderData;
+import tmon.data.constant.BeverageConstant;
+import tmon.manager.CafeManager;
+import tmon.manager.DBManager;
+
+public class Main {
+	public static void main(String[] args) {
+
+		int isOpen = CafeManager.getInstnace().openCafe();
+		String chosen_menu = "";
+		Scanner scan = Common.openScanner();
+		if (isOpen == 1) {
+
+			System.out
+					.println("================== Choose Menu ==================");
+			System.out.println("1. Show Menu");
+			System.out.println("2. Manage Barista");
+			System.out.println("3. Manage RoadBalancing");
+			System.out.println("4. Manage Menu");
+			System.out.println("insert (-1) or (Exit) if you want to exit");
+			chosen_menu = scan.nextLine();
+			if (chosen_menu.equals("1")) {
+				Menu.getInstnace().showMenu();
+				
+			}
+		} else {
+			System.out.println("no line");
+		}
+
+		Common.closeScanner();
+
+	}
+
+}

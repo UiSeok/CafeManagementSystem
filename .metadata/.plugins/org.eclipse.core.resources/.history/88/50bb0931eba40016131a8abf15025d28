@@ -1,0 +1,50 @@
+{
+	"orderData":
+	{
+		"orderId":123,
+		"orderTime":20161019183330,
+		"beverages":
+		[
+			{
+				"bevId":100,
+				"bevName":"Espresso",
+				"count":2
+			},
+			{
+				"bevId":101,
+				"bevName":"Americano",
+				"count":1
+			},
+			{
+				"bevId":102,
+				"bevName":"Fruit Juice",
+				"count":11
+			},
+			{
+				"bevId":103,
+				"bevName":"Cafe Latte",
+				"count":4
+			},
+			{
+				"bevId":100,
+				"bevName":"Espresso",
+				"count":1
+			},
+			{
+				"bevId":101,
+				"bevName":"Americano",
+				"count":2
+			},
+			{
+				"bevId":102,
+				"bevName":"Fruit Juice",
+				"count":11
+			},
+			{
+				"bevId":103,
+				"bevName":"Cafe Latte",
+				"count":5
+			}
+		]
+}
+}

@@ -1,0 +1,7 @@
+package tmon.data;
+
+import java.io.Serializable;
+
+public class OrderDataResult implements Serializable{
+
+}

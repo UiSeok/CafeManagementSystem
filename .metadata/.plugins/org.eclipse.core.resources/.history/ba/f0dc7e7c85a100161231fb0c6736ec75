@@ -1,0 +1,122 @@
+package tmon.data;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Queue;
+
+import tmon.data.constant.BeverageConstant;
+
+public class BaristaData extends EmployeeData {
+
+	private Map<Integer, Integer> beverage_management;
+	Queue<OrderData> orderList;
+	private int totalTime = 0;
+
+	public BaristaData() {
+		beverage_management = new HashMap<Integer, Integer>();
+		for(Beverage bev : Menu.getInstnace().getMenu()){
+			if(bev.bevId == 100){ // Espresso
+				beverage_management.put(bev.bevId, 2000);
+			}else if(bev.bevId == 101){ // Americano
+				beverage_management.put(bev.bevId, 3000);
+			}else if(bev.bevId == 102){ // Fruit Juice
+				beverage_management.put(bev.bevId, 5000);
+			}else if(bev.bevId == 103){ // Cafe Latte
+				beverage_management.put(bev.bevId, 4000);
+			}
+		}
+		orderList = new LinkedList<OrderData>();
+	}
+
+	public BaristaData(int id, String name, int age, Date join_date,
+			Date retire_date, int salary) {
+		super(id, name, age, join_date, retire_date, salary);
+		beverage_management = new HashMap<Integer, Integer>();
+		orderList = new LinkedList<OrderData>();
+	}
+
+	public void setGoodOrBadAt(int bevId, int time) {
+		beverage_management.put(bevId, time);
+	}
+
+	public Map<Integer, Integer> getGoodOrBadAt() {
+		return beverage_management;
+	}
+
+	public void addOrder(OrderData data) {
+		orderList.add(data);
+		for (Beverage bev : data.beverages) {
+			if (beverage_management.containsKey(bev.bevId))
+				totalTime += beverage_management.get(bev.bevId) * bev.count;
+			else {
+				switch (bev.bevId) {
+				case BeverageConstant.ESPRESSO:
+					totalTime += BeverageConstant.BASIC_TIME_MAKE_ESPRESSO
+							* bev.count;
+					break;
+				case BeverageConstant.AMERICANO:
+					totalTime += BeverageConstant.BASIC_TIME_MAKE_AMERICANO
+							* bev.count;
+					break;
+				case BeverageConstant.FRUITJUICE:
+					totalTime += BeverageConstant.BASIC_TIME_MAKE_FRUITJUICE
+							* bev.count;
+					break;
+				case BeverageConstant.CAFELATTE:
+					totalTime += BeverageConstant.BASIC_TIME_MAKE_CAFELATTE
+							* bev.count;
+					break;
+				}
+			}
+		}
+	}
+
+	public void removeOrder() {
+		OrderData removedData = orderList.remove();
+		for (Beverage bev : removedData.beverages) {
+			if (beverage_management.containsKey(bev.bevId))
+				totalTime -= beverage_management.get(bev.bevId) * bev.count;
+			else {
+				switch (bev.bevId) {
+				case BeverageConstant.ESPRESSO:
+					totalTime -= BeverageConstant.BASIC_TIME_MAKE_ESPRESSO
+							* bev.count;
+					break;
+				case BeverageConstant.AMERICANO:
+					totalTime -= BeverageConstant.BASIC_TIME_MAKE_AMERICANO
+							* bev.count;
+					break;
+				case BeverageConstant.FRUITJUICE:
+					totalTime -= BeverageConstant.BASIC_TIME_MAKE_FRUITJUICE
+							* bev.count;
+					break;
+				case BeverageConstant.CAFELATTE:
+					totalTime -= BeverageConstant.BASIC_TIME_MAKE_CAFELATTE
+							* bev.count;
+					break;
+				}
+			}
+		}
+	}
+
+	public int getTotalTime() {
+		return totalTime;
+	}
+	
+	@Override
+	public String toString() {
+		
+		StringBuffer sb = new StringBuffer();
+		sb.append("================================ BARISTA INFO ================================");
+		sb.append("\nID : "+this.id);
+		sb.append("  NAME : "+this.name);
+		sb.append("  AGE : "+this.age);
+		sb.append("  SALARY : "+this.salary);
+		sb.append("\nJOIN_DATE : "+this.join_date);
+		sb.append("  RETIRE_DATE : "+this.retire_date);
+		
+		return sb.toString();
+	}
+}

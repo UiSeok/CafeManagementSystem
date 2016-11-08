@@ -1,0 +1,20 @@
+package tmon.data;
+
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.google.gson.annotations.SerializedName;
+
+public class OrderData implements Serializable{
+
+	private static final long serialVersionUID = -4103602890710571485L;
+	
+	@SerializedName("orderId")
+	public long orderId;
+	@SerializedName("orderTime")
+	public long orderTime;
+	@SerializedName("beverages")
+	public HashMap<Beverage, Integer> beverages;
+}

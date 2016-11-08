@@ -10,88 +10,196 @@ import tmon.data.constant.BeverageConstant;
 
 public class BaristaData extends EmployeeData {
 
-	// Different from other Barista
-	private Map<Integer, Integer> goodOrBadAt;
-	Queue<OrderData> orderList;
+	private Map<Integer, Integer> beverage_management;
+	Queue<Beverage> orderList;
 	private int totalTime = 0;
+	Thread orderCheckThread;
 
 	public BaristaData() {
-		goodOrBadAt = new HashMap<Integer, Integer>();
-		orderList = new LinkedList<OrderData>();
+		beverage_management = new HashMap<Integer, Integer>();
+		for (Beverage bev : Menu.getInstnace().getMenu()) {
+			if (bev.bevId == 100) { // Espresso
+				beverage_management.put(bev.bevId, 2000);
+			} else if (bev.bevId == 101) { // Americano
+				beverage_management.put(bev.bevId, 3000);
+			} else if (bev.bevId == 102) { // Fruit Juice
+				beverage_management.put(bev.bevId, 5000);
+			} else if (bev.bevId == 103) { // Cafe Latte
+				beverage_management.put(bev.bevId, 4000);
+			}
+		}
+		orderList = new LinkedList<Beverage>();
+		orderCheckThread = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				System.out.println("Barista work start");
+				while (true) {
+
+					if (!orderList.isEmpty()) {
+						Beverage order = orderList.poll();
+						try {
+							orderCheckThread.sleep(beverage_management
+									.get(order.bevId) * order.count);
+							System.out.println("Beverage " + order.bevName
+									+ " " + order.count + "cups are ready.");
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+
+				}
+			}
+		});
+		orderCheckThread.start();
+	}
+
+	public void setBeverageManagement(int bevId, int time) {
+		beverage_management.put(bevId, time);
+	}
+
+	public int getBeverageMakingTime(int bevId) {
+		return beverage_management.get(bevId);
+	}
+
+	public int getBeverageMakingTime(String bevName) {
+		if (bevName.equalsIgnoreCase("Espresso")) {
+			return beverage_management.get(100);
+		} else if (bevName.equalsIgnoreCase("Americano")) {
+			return beverage_management.get(101);
+		} else if (bevName.equalsIgnoreCase("Fruit Juice")) {
+			return beverage_management.get(102);
+		} else if (bevName.equalsIgnoreCase("Cafe Latte")) {
+			return beverage_management.get(103);
+		}
+		return -1;
 	}
 
 	public BaristaData(int id, String name, int age, Date join_date,
 			Date retire_date, int salary) {
 		super(id, name, age, join_date, retire_date, salary);
-		goodOrBadAt = new HashMap<Integer, Integer>();
-		orderList = new LinkedList<OrderData>();
-	}
-
-	public void setGoodOrBadAt(int bevId, int time) {
-		goodOrBadAt.put(bevId, time);
-	}
-
-	public Map<Integer, Integer> getGoodOrBadAt() {
-		return goodOrBadAt;
-	}
-
-	public void addOrder(OrderData data) {
-		orderList.add(data);
-		for (Beverage bev : data.beverages) {
-			if (goodOrBadAt.containsKey(bev.bevId))
-				totalTime += goodOrBadAt.get(bev.bevId) * bev.count;
-			else {
-				switch (bev.bevId) {
-				case BeverageConstant.ESPRESSO:
-					totalTime += BeverageConstant.BASIC_TIME_MAKE_ESPRESSO
-							* bev.count;
-					break;
-				case BeverageConstant.AMERICANO:
-					totalTime += BeverageConstant.BASIC_TIME_MAKE_AMERICANO
-							* bev.count;
-					break;
-				case BeverageConstant.FRUITJUICE:
-					totalTime += BeverageConstant.BASIC_TIME_MAKE_FRUITJUICE
-							* bev.count;
-					break;
-				case BeverageConstant.CAFELATTE:
-					totalTime += BeverageConstant.BASIC_TIME_MAKE_CAFELATTE
-							* bev.count;
-					break;
-				}
+		beverage_management = new HashMap<Integer, Integer>();
+		for (Beverage bev : Menu.getInstnace().getMenu()) {
+			if (bev.bevId == 100) { // Espresso
+				beverage_management.put(bev.bevId, 2000);
+			} else if (bev.bevId == 101) { // Americano
+				beverage_management.put(bev.bevId, 3000);
+			} else if (bev.bevId == 102) { // Fruit Juice
+				beverage_management.put(bev.bevId, 5000);
+			} else if (bev.bevId == 103) { // Cafe Latte
+				beverage_management.put(bev.bevId, 4000);
 			}
 		}
+		orderList = new LinkedList<Beverage>();
+		orderCheckThread = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				while (true) {
+					try {
+						orderCheckThread.sleep(1000);
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					if (!orderList.isEmpty()) {
+						Beverage order = orderList.poll();
+						try {
+							orderCheckThread.sleep(beverage_management
+									.get(order.bevId) * order.count);
+							System.out.println("Beverage " + order.bevName
+									+ " " + order.count + "cups are ready.");
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+		});
+		orderCheckThread.start();
 	}
 
-	public void removeOrder() {
-		OrderData removedData = orderList.remove();
-		for (Beverage bev : removedData.beverages) {
-			if (goodOrBadAt.containsKey(bev.bevId))
-				totalTime -= goodOrBadAt.get(bev.bevId) * bev.count;
+	public void addOrder(Beverage bev) {
+		orderList.add(bev);
+
+		if (beverage_management.containsKey(bev.bevId))
+			totalTime += beverage_management.get(bev.bevId) * bev.count;
+		else {
+			switch (bev.bevId) {
+			case BeverageConstant.ESPRESSO:
+				totalTime += BeverageConstant.BASIC_TIME_MAKE_ESPRESSO
+						* bev.count;
+				break;
+			case BeverageConstant.AMERICANO:
+				totalTime += BeverageConstant.BASIC_TIME_MAKE_AMERICANO
+						* bev.count;
+				break;
+			case BeverageConstant.FRUITJUICE:
+				totalTime += BeverageConstant.BASIC_TIME_MAKE_FRUITJUICE
+						* bev.count;
+				break;
+			case BeverageConstant.CAFELATTE:
+				totalTime += BeverageConstant.BASIC_TIME_MAKE_CAFELATTE
+						* bev.count;
+				break;
+			}
+		}
+
+	}
+
+	public Beverage removeOrder() {
+		Beverage removedData = null;
+		if (!orderList.isEmpty()) {
+			removedData = orderList.remove();
+
+			if (beverage_management.containsKey(removedData.bevId))
+				totalTime -= beverage_management.get(removedData.bevId)
+						* removedData.count;
 			else {
-				switch (bev.bevId) {
+				switch (removedData.bevId) {
 				case BeverageConstant.ESPRESSO:
 					totalTime -= BeverageConstant.BASIC_TIME_MAKE_ESPRESSO
-							* bev.count;
+							* removedData.count;
 					break;
 				case BeverageConstant.AMERICANO:
 					totalTime -= BeverageConstant.BASIC_TIME_MAKE_AMERICANO
-							* bev.count;
+							* removedData.count;
 					break;
 				case BeverageConstant.FRUITJUICE:
 					totalTime -= BeverageConstant.BASIC_TIME_MAKE_FRUITJUICE
-							* bev.count;
+							* removedData.count;
 					break;
 				case BeverageConstant.CAFELATTE:
 					totalTime -= BeverageConstant.BASIC_TIME_MAKE_CAFELATTE
-							* bev.count;
+							* removedData.count;
 					break;
 				}
 			}
 		}
+		return removedData;
 	}
 
 	public int getTotalTime() {
 		return totalTime;
+	}
+
+	@Override
+	public String toString() {
+
+		StringBuffer sb = new StringBuffer();
+		sb.append("================================ BARISTA INFO ================================");
+		sb.append("\nID : " + this.id);
+		sb.append("  NAME : " + this.name);
+		sb.append("  AGE : " + this.age);
+		sb.append("  SALARY : " + this.salary);
+		sb.append("\nJOIN_DATE : " + this.join_date);
+		sb.append("  RETIRE_DATE : " + this.retire_date);
+
+		return sb.toString();
+	}
+
+	public void stopWorking() {
+		orderCheckThread.stop();
+		orderCheckThread = null;
 	}
 }
