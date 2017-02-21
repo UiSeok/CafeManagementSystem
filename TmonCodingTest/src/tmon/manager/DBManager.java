@@ -27,8 +27,8 @@ public class DBManager {
 
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver"; // Use MySQL and JDBC
 	static final String DB_URL = "jdbc:mysql://127.0.0.1:3306/test"; // local DB Access
-	static final String USERNAME = "root";
-	static final String PASSWORD = "k3898k";
+	static final String USERNAME = "";
+	static final String PASSWORD = "";
 
 	private static Statement stmt = null;
 	private static Connection conn = null;
@@ -167,8 +167,6 @@ public class DBManager {
 			while (rs.next()) {
 				String id = rs.getString("id");
 				String name = rs.getString("name");
-				
-				
 				beverages.add(new Beverage(Integer.parseInt(id), name, 0));
 			}
 			rs.close();
