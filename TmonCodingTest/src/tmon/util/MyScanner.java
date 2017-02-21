@@ -1,4 +1,4 @@
-package tmon.data;
+package tmon.util;
 
 import java.util.Scanner;
 
@@ -6,12 +6,14 @@ public class MyScanner {
 	private static Scanner scanner = null;
 	
 	public static Scanner openScanner(){
-		scanner = new Scanner(System.in);
+		if( scanner == null )
+			scanner = new Scanner(System.in);
 		return scanner;
 	}
 	
 	public static void closeScanner(){
-		scanner.close();
+		if( scanner != null)
+			scanner.close();
 	}
 	
 	

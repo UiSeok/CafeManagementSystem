@@ -17,7 +17,7 @@ public class BaristaData extends EmployeeData {
 
 	public BaristaData() {
 		beverage_management = new HashMap<Integer, Integer>();
-		for (Beverage bev : Menu.getInstnace().getMenu()) {
+		for (Beverage bev : Menu.getInstnace().getBevList()) {
 			if (bev.bevId == 100) { // Espresso
 				beverage_management.put(bev.bevId, 2000);
 			} else if (bev.bevId == 101) { // Americano
@@ -79,7 +79,7 @@ public class BaristaData extends EmployeeData {
 			Date retire_date, int salary) {
 		super(id, name, age, join_date, retire_date, salary);
 		beverage_management = new HashMap<Integer, Integer>();
-		for (Beverage bev : Menu.getInstnace().getMenu()) {
+		for (Beverage bev : Menu.getInstnace().getBevList()) {
 			if (bev.bevId == 100) { // Espresso
 				beverage_management.put(bev.bevId, 2000);
 			} else if (bev.bevId == 101) { // Americano

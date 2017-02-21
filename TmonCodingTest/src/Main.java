@@ -1,45 +1,43 @@
+import tmon.data.Menu;
+import tmon.data.constant.MenuConstant;
 import tmon.manager.CafeManager;
+import tmon.util.MyScanner;
 
-import static java.lang.System.exit;
+import java.util.Scanner;
 
 public class Main {
-	public static void main(String[] args) {
-		
-		if(CafeManager.getInstnace().openCafe() == 1){
-			// Manager open Cafe
-			int input = 0;
-			do{
-				input = CafeManager.getInstnace().getMenu();
-				switch (input) {
-				case 1:
-					// Show Menu
-					CafeManager.getInstnace().showMenu();
-					break;
-				case 2:
-					// Manage Barista
-					
-					break;
-				case 3:
-					// Manage LoadBalancing
-					
-					break;
-				case 4:
-					// Manage Menu
-					break;
-				case 5:
-					CafeManager.getInstnace().order(null);
-					break;
-				case 6:
-					// Close Cafe
-					CafeManager.getInstnace().closeCafe();
-					return;
-				}
-			}
-			while( input != 6);
-		}else{
-			exit(0);
-		}
-		
-	}
+
+    public static void main(String[] args) {
+        Scanner scanner = MyScanner.openScanner();
+
+        CafeManager manager = new CafeManager();
+
+        manager.openCafe();
+
+        cafeManage(manager, scanner);
+
+        manager.closeCafe();
+        MyScanner.closeScanner();
+    }
+
+    private static void cafeManage(CafeManager manager, Scanner scanner) {
+        int input = 0;
+        while(input != -1){
+            showFirstMenu();
+            input = scanner.nextInt();
+            if( input == MenuConstant.FIRST_MENU_SHOWMENU){
+                Menu.getInstnace().showMenu();
+            }
+            if( input == MenuConstant.FIRST_MENU_AUTOORDER ){
+                manager.autoOrder();
+            }
+        }
+    }
+
+    private static void showFirstMenu() {
+        System.out.println("1. Show Menu");
+        System.out.println("2. Auto Order");
+        System.out.println("insert -1 to exit program");
+    }
 
 }
