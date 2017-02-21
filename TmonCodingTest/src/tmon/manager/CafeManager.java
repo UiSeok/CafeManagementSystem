@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,7 +14,7 @@ import java.util.Scanner;
 
 import tmon.data.BaristaData;
 import tmon.data.Beverage;
-import tmon.data.Common;
+import tmon.data.MyScanner;
 import tmon.data.OrderData;
 import tmon.data.OrderResult;
 
@@ -26,7 +25,7 @@ public class CafeManager {
 	private Queue<Beverage> orderQueue;
 	private List<BaristaData> barista_list;
 	private List<Beverage> menu_list;
-	private Scanner scan = Common.openScanner();
+	private Scanner scan = MyScanner.openScanner();
 	Thread orderCheckThread;
 	Gson gson;
 
@@ -139,8 +138,7 @@ public class CafeManager {
 	}
 
 	public void closeCafe() {
-		// BaristaManager.getInstnace().clear();
-		Common.closeScanner();
+		MyScanner.closeScanner();
 		DBManager.getInstnace().removeConnection();
 		orderCheckThread.stop();
 		orderQueue.clear();

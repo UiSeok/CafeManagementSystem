@@ -1,5 +1,7 @@
 import tmon.manager.CafeManager;
 
+import static java.lang.System.exit;
+
 public class Main {
 	public static void main(String[] args) {
 		
@@ -34,6 +36,8 @@ public class Main {
 				}
 			}
 			while( input != 6);
+		}else{
+			exit(0);
 		}
 		
 	}
