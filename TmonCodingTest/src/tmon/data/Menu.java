@@ -3,6 +3,7 @@ package tmon.data;
 import java.util.ArrayList;
 import java.util.List;
 
+import tmon.data.entity.Beverage;
 import tmon.manager.DBManager;
 
 public class Menu {
@@ -19,7 +20,12 @@ public class Menu {
 
     private Menu() {
         bev_list = new ArrayList<Beverage>();
-        bev_list.addAll(DBManager.getInstnace().getMenu());
+        this.bev_list.addAll(DBManager.getInstnace().getMenu());
+    }
+
+    private Menu(List<Beverage> bev_list){
+        this.bev_list = new ArrayList<Beverage>();
+        this.bev_list.addAll(bev_list);
     }
 
     public void showMenu() {

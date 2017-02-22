@@ -5,6 +5,8 @@ import tmon.util.MyScanner;
 
 import java.util.Scanner;
 
+import static java.lang.System.exit;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -18,6 +20,7 @@ public class Main {
 
         manager.closeCafe();
         MyScanner.closeScanner();
+        exit(0);
     }
 
     private static void cafeManage(CafeManager manager, Scanner scanner) {

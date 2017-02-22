@@ -1,4 +1,4 @@
-package tmon.data;
+package tmon.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 

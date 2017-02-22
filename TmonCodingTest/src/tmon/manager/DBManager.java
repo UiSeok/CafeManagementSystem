@@ -6,13 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import tmon.data.BaristaData;
-import tmon.data.Beverage;
+import tmon.data.entity.Beverage;
 import tmon.data.EmployeeData;
-import tmon.data.Menu;
 
 public class DBManager {
 
@@ -27,8 +25,8 @@ public class DBManager {
 
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver"; // Use MySQL and JDBC
 	static final String DB_URL = "jdbc:mysql://127.0.0.1:3306/test"; // local DB Access
-	static final String USERNAME = "";
-	static final String PASSWORD = "";
+	static final String USERNAME = "root";
+	static final String PASSWORD = "k3898k";
 
 	private static Statement stmt = null;
 	private static Connection conn = null;
@@ -182,10 +180,15 @@ public class DBManager {
 	
 	public void removeConnection(){
 		try {
-			stmt.close();
-			conn.close();
-			conn = null;
-			stmt = null;
+			if( stmt!= null )
+				stmt.close();
+				stmt = null;
+			if( conn != null ) {
+				conn.close();
+				conn = null;
+			}
+
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

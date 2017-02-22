@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Queue;
 
 import tmon.data.constant.BeverageConstant;
+import tmon.data.entity.Beverage;
 
 public class BaristaData extends EmployeeData {
 
@@ -199,7 +200,7 @@ public class BaristaData extends EmployeeData {
 	}
 
 	public void stopWorking() {
-		orderCheckThread.stop();
+		orderCheckThread.interrupt();
 		orderCheckThread = null;
 	}
 }
