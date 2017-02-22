@@ -1,4 +1,4 @@
-package tmon.data;
+package tmon.cafe;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -9,23 +9,41 @@ import java.util.Queue;
 import tmon.data.constant.BeverageConstant;
 import tmon.data.entity.Beverage;
 
-public class BaristaData extends EmployeeData {
+public class Barista {
+
+	private int id;
+	private String name;
+	private int age;
+	private Date join_date;
+	private Date retire_date;
+	private int salary;
 
 	private Map<Integer, Integer> beverage_management;
 	Queue<Beverage> orderList;
 	private int totalTime = 0;
 	Thread orderCheckThread;
 
-	public BaristaData() {
+	public Barista(int id, String name, int age, Date join_date, Date retire_date, int salary) {
+		this.id = id;
+		this.name = name;
+		this.age = age;
+		this.join_date = join_date;
+		this.retire_date = retire_date;
+		this.salary = salary;
+
+		init();
+	}
+
+	private void init() {
 		beverage_management = new HashMap<Integer, Integer>();
 		for (Beverage bev : Menu.getInstnace().getBevList()) {
-			if (bev.bevId == 100) { // Espresso
+			if (bev.bevId == BeverageConstant.ESPRESSO) { // Espresso
 				beverage_management.put(bev.bevId, 2000);
-			} else if (bev.bevId == 101) { // Americano
+			} else if (bev.bevId == BeverageConstant.AMERICANO) {
 				beverage_management.put(bev.bevId, 3000);
-			} else if (bev.bevId == 102) { // Fruit Juice
+			} else if (bev.bevId == BeverageConstant.FRUITJUICE) { // Fruit Juice
 				beverage_management.put(bev.bevId, 5000);
-			} else if (bev.bevId == 103) { // Cafe Latte
+			} else if (bev.bevId == BeverageConstant.CAFELATTE) { // Cafe Latte
 				beverage_management.put(bev.bevId, 4000);
 			}
 		}
@@ -36,72 +54,10 @@ public class BaristaData extends EmployeeData {
 			public void run() {
 				System.out.println("Barista work start");
 				while (true) {
-
-					if (!orderList.isEmpty()) {
-						Beverage order = orderList.poll();
-						try {
-							orderCheckThread.sleep(beverage_management
-									.get(order.bevId) * order.count);
-							System.out.println("Beverage " + order.bevName
-									+ " " + order.count + "cups are ready.");
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-
-				}
-			}
-		});
-		orderCheckThread.start();
-	}
-
-	public void setBeverageManagement(int bevId, int time) {
-		beverage_management.put(bevId, time);
-	}
-
-	public int getBeverageMakingTime(int bevId) {
-		return beverage_management.get(bevId);
-	}
-
-	public int getBeverageMakingTime(String bevName) {
-		if (bevName.equalsIgnoreCase("Espresso")) {
-			return beverage_management.get(100);
-		} else if (bevName.equalsIgnoreCase("Americano")) {
-			return beverage_management.get(101);
-		} else if (bevName.equalsIgnoreCase("Fruit Juice")) {
-			return beverage_management.get(102);
-		} else if (bevName.equalsIgnoreCase("Cafe Latte")) {
-			return beverage_management.get(103);
-		}
-		return -1;
-	}
-
-	public BaristaData(int id, String name, int age, Date join_date,
-			Date retire_date, int salary) {
-		super(id, name, age, join_date, retire_date, salary);
-		beverage_management = new HashMap<Integer, Integer>();
-		for (Beverage bev : Menu.getInstnace().getBevList()) {
-			if (bev.bevId == 100) { // Espresso
-				beverage_management.put(bev.bevId, 2000);
-			} else if (bev.bevId == 101) { // Americano
-				beverage_management.put(bev.bevId, 3000);
-			} else if (bev.bevId == 102) { // Fruit Juice
-				beverage_management.put(bev.bevId, 5000);
-			} else if (bev.bevId == 103) { // Cafe Latte
-				beverage_management.put(bev.bevId, 4000);
-			}
-		}
-		orderList = new LinkedList<Beverage>();
-		orderCheckThread = new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				while (true) {
 					try {
 						orderCheckThread.sleep(1000);
-					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
 					}
 					if (!orderList.isEmpty()) {
 						Beverage order = orderList.poll();
@@ -114,6 +70,7 @@ public class BaristaData extends EmployeeData {
 							e.printStackTrace();
 						}
 					}
+
 				}
 			}
 		});
@@ -202,5 +159,30 @@ public class BaristaData extends EmployeeData {
 	public void stopWorking() {
 		orderCheckThread.interrupt();
 		orderCheckThread = null;
+	}
+
+
+	public int getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public Date getJoin_date() {
+		return join_date;
+	}
+
+	public Date getRetire_date() {
+		return retire_date;
+	}
+
+	public int getSalary() {
+		return salary;
 	}
 }

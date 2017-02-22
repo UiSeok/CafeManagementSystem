@@ -1,11 +1,11 @@
-package tmon.manager;
+package tmon.cafe;
 
 import com.google.gson.Gson;
 import com.sun.javafx.tools.packager.Log;
-import tmon.data.BaristaData;
 import tmon.data.entity.Beverage;
 import tmon.data.entity.OrderData;
 import tmon.data.entity.OrderResult;
+import tmon.manager.DBManager;
 import tmon.util.MyScanner;
 
 import java.io.BufferedReader;
@@ -18,7 +18,7 @@ import java.util.*;
 public class CafeManager {
 
     private Queue<Beverage> orderQueue;
-    private List<BaristaData> barista_list;
+    private List<Barista> barista_list;
     private List<Beverage> bev_list;
     private Scanner scan;
     Thread orderCheckThread;
@@ -26,16 +26,20 @@ public class CafeManager {
 
     public CafeManager() {
         orderQueue = new LinkedList<Beverage>();
-        barista_list = new ArrayList<BaristaData>();
+        barista_list = new ArrayList<Barista>();
         bev_list = new ArrayList<Beverage>();
         gson = new Gson();
         scan = MyScanner.openScanner();
 
         init();
 
+    }
+
+    private void init() {
+        barista_list.addAll(DBManager.getInstnace().getBaristas());
+        bev_list.addAll(DBManager.getInstnace().getMenu());
         // Make order Queue run another Thread every 1 second
         orderCheckThread = new Thread(new Runnable() {
-
             @Override
             public void run() {
                 while (true) {
@@ -51,17 +55,6 @@ public class CafeManager {
                 }
             }
         });
-    }
-
-    private void init() {
-        barista_list.addAll(DBManager.getInstnace().getBaristas());
-        bev_list.addAll(DBManager.getInstnace().getMenu());
-    }
-
-    public void openCafe() {
-
-        orderCheckThread.start();
-
     }
 
     private int getMinimumValueBaristaIndex() {
@@ -89,13 +82,17 @@ public class CafeManager {
 
     }
 
+    public void openCafe() {
+        orderCheckThread.start();
+    }
+
     public void closeCafe() {
         MyScanner.closeScanner();
         DBManager.getInstnace().removeConnection();
         orderCheckThread.interrupt();
         orderQueue.clear();
         orderQueue = null;
-        for (BaristaData data : barista_list) {
+        for (Barista data : barista_list) {
             data.removeOrder();
         }
         barista_list.clear();

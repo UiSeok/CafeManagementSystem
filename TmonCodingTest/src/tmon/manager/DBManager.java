@@ -8,9 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import tmon.data.BaristaData;
+import tmon.cafe.Barista;
 import tmon.data.entity.Beverage;
-import tmon.data.EmployeeData;
 
 public class DBManager {
 
@@ -53,7 +52,7 @@ public class DBManager {
 		}
 	}
 
-	public void insertEmployee(EmployeeData data) {
+	public void insertEmployee(Barista data) {
 		try {
 			stmt = null;
 			stmt = conn.createStatement();
@@ -81,8 +80,8 @@ public class DBManager {
 		}
 	}
 
-	public List<BaristaData> getBaristas() {
-		List<BaristaData> baristas = new ArrayList<BaristaData>();
+	public List<Barista> getBaristas() {
+		List<Barista> baristas = new ArrayList<Barista>();
 
 		try {
 
@@ -101,7 +100,7 @@ public class DBManager {
 				String join = rs.getString("join_day");
 				String retire = rs.getString("retire_day");
 
-				baristas.add(new BaristaData(Integer.parseInt(id), name,
+				baristas.add(new Barista(Integer.parseInt(id), name,
 						Integer.parseInt(age), null, null, Integer
 								.parseInt(salary)));
 			}

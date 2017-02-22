@@ -1,4 +1,4 @@
-package tmon.data;
+package tmon.cafe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +7,9 @@ import tmon.data.entity.Beverage;
 import tmon.manager.DBManager;
 
 public class Menu {
+
+
+
     List<Beverage> bev_list;
 
     private static Menu instance;
